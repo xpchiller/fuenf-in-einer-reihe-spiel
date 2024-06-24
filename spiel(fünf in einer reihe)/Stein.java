@@ -1,23 +1,36 @@
 import jserver.XSendAdapter;
 
 public class Stein {
-    int x;
-    int y;
-    private String form = "c";
 
-
-    //Um Später herauszufinden ob Stein Schwarz oder Weiß ist
     private static int objektZaehler = 0;
+    private static int farbe;
+    private int x;
+    private int y;
+    private String form = "c";
+    private static boolean benutzbar = true;
 
-
-
-    private boolean active = true;
-
-
-
-    Stein(){
-        bestimmeFarbe();
+    Stein(int x, int y, int farbe) {
+        this.x = x;
+        this.y = y;
+        this.form = form;
+        this.farbe = farbe;
         objektZaehler++;
+    }
+
+    public static int getAnzahlObjekte() {
+        return objektZaehler;
+    }
+
+    public static int getFarbe() {
+        if (istGerade()) {
+            return farbe = XSendAdapter.BLACK;
+        } else {
+            return farbe = XSendAdapter.WHITE;
+        }
+    }
+
+    public static boolean istGerade() {
+        return objektZaehler % 2 == 1;
     }
 
     public int getX() {
@@ -28,42 +41,16 @@ public class Stein {
         return y;
     }
 
-    public void setX(int neuX){
-        this.x = neuX;
+    public String getForm() {
+        return this.form;
     }
 
-    public void setY(int neuY){
-        this.y = neuY;
+    public static boolean isBenutzbar() {
+        return benutzbar;
     }
 
-    public static int getAnzahlObjekte() {
-        return objektZaehler;
+    public static void setBenutzbar(boolean benutzbar) {
+        Stein.benutzbar = benutzbar;
     }
-
-    public static int bestimmeFarbe(){
-        if(istGerade()){
-            return XSendAdapter.BLACK;
-        }else{
-            return XSendAdapter.WHITE;
-        }
-    }
-
-    public static boolean istGerade(){
-        return objektZaehler % 2 == 1;
-    }
-
-
-        public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-
-
-
-
 
 }
