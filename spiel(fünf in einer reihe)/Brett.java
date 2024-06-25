@@ -2,13 +2,11 @@ import jserver.Board;
 import jserver.BoardClickEvent;
 import jserver.XSend;
 import jserver.XSendAdapter;
-import plotter.Graphic;
 
 public class Brett {
     private int spielfeldGroesse = 15;
     private Board board = new Board();
     private XSendAdapter xsend = new XSendAdapter(board);
-    private Graphic graphic;
     private Stein[][] spielfeld = new Stein[spielfeldGroesse][spielfeldGroesse];
 
     public void spielfeldAufsetzen() {
@@ -25,10 +23,10 @@ public class Brett {
     }
 
     public void setzeStein(int xSpieler, int ySpieler, Stein stein) {
-        if(Stein.isBenutzbar()){
+        if (Stein.istBenutzbar()) {
             if (spielfeld[xSpieler][ySpieler] == null) {
                 spielfeld[xSpieler][ySpieler] = stein;
-                xsend.farbe2(xSpieler, ySpieler, Stein.getFarbe());
+                xsend.farbe2(xSpieler, ySpieler, stein.getFarbe());
                 xsend.form2(xSpieler, ySpieler, stein.getForm());
                 if (pruefeGewinn(xSpieler, ySpieler, stein)) {
                     xsend.statusText("Spieler " + (Stein.istGerade() ? "Schwarz" : "Weiß") + " gewinnt!");
@@ -69,23 +67,17 @@ public class Brett {
                 break;
             }
         }
-        return count == 5;
+        return count >= 5;
     }
-
-
-    public int getSpielfeldGroesse() {
-        return spielfeldGroesse * spielfeldGroesse;
-    }
-
 
     private void boardClick(BoardClickEvent mausklick) {
-        if(Stein.isBenutzbar()){
+        if (Stein.istBenutzbar()) {
             int deltaX = mausklick.getX();
             int deltaY = mausklick.getY();
             if (spielfeld[deltaX][deltaY] == null) {
-                Stein stein = new Stein(deltaX, deltaY, Stein.getFarbe());
+                Stein stein = new Stein(deltaX, deltaY);
+                stein.setFarbe();
                 setzeStein(deltaX, deltaY, stein);
-                System.out.println(Stein.getAnzahlObjekte());
             }
         }
 

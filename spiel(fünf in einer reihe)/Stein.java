@@ -3,17 +3,15 @@ import jserver.XSendAdapter;
 public class Stein {
 
     private static int objektZaehler = 0;
-    private static int farbe;
+    private static boolean benutzbar = true;
+    private String form = "c";
+    private int farbe = XSendAdapter.GRAY;
     private int x;
     private int y;
-    private String form = "c";
-    private static boolean benutzbar = true;
 
-    Stein(int x, int y, int farbe) {
+    Stein(int x, int y) {
         this.x = x;
         this.y = y;
-        this.form = form;
-        this.farbe = farbe;
         objektZaehler++;
     }
 
@@ -21,36 +19,33 @@ public class Stein {
         return objektZaehler;
     }
 
-    public static int getFarbe() {
-        if (istGerade()) {
-            return farbe = XSendAdapter.BLACK;
-        } else {
-            return farbe = XSendAdapter.WHITE;
-        }
-    }
-
     public static boolean istGerade() {
         return objektZaehler % 2 == 1;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public String getForm() {
-        return this.form;
-    }
-
-    public static boolean isBenutzbar() {
+    public static boolean istBenutzbar() {
         return benutzbar;
     }
 
     public static void setBenutzbar(boolean benutzbar) {
         Stein.benutzbar = benutzbar;
+    }
+
+    public int getFarbe() {
+        return this.farbe;
+    }
+
+    public void setFarbe() {
+        if (istGerade()) {
+            this.farbe = XSendAdapter.BLACK;
+        } else {
+            this.farbe = XSendAdapter.WHITE;
+        }
+
+    }
+
+    public String getForm() {
+        return this.form;
     }
 
 }
